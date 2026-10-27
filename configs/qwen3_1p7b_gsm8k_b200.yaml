@@ -1,0 +1,37 @@
+# Paths resolve relative to this file. No downloads during inference.
+model:
+  path: ../../../models/Qwen3-1.7B
+  device: cuda:0
+  dtype: bfloat16
+  attention: sdpa
+  batch_size: 1
+data:
+  train: ../../../data/gsm8k/train-00000-of-00001.parquet
+  test: ../../../data/gsm8k/test-00000-of-00001.parquet
+  shuffle_seed: 42
+  search_size: 1000
+  validation_size: 100
+  stage1_size: 128
+  expected_train_rows: 7473
+  expected_test_rows: 1319
+decode:
+  thinking_budget: 400
+  answer_budget: 128
+  # Reconstructed prompt: the paper does not disclose its exact strings.
+  user_template: |-
+    {question}
+    Please put your final numerical answer in \boxed{{}}.
+  answer_cue: "\n\nFinal answer: "
+  think_end: '</think>'
+search:
+  top_k_stage1: 24
+  top_k_stage2: 5
+  tie_seed: 42
+  candidate_routes: null
+evaluation:
+  test_limit: null
+  bootstrap_samples: 10000
+  bootstrap_seed: 42
+nemo_rl_path: ../../nemo-rl
+output_dir: ../outputs/qwen3_1p7b_gsm8k_b200
+backend: nemo

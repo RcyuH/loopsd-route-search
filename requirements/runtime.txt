@@ -1,0 +1,10 @@
+# Direct dependencies pinned to the versions used during local development.
+# CUDA execution must still be checked on the target server.
+transformers==5.16.1
+accelerate==1.15.0
+pyarrow==23.0.1
+numpy==2.5.4
+pydantic==2.14.1
+pyyaml==6.0.3
+filelock==3.32.7
+matplotlib==3.11.2

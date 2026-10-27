@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "loopsd-route-search"
+version = "0.1.0"
+description = "Frozen Qwen3 layer-route search for LoOPSD, with a NeMo RL generation adapter"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "torch>=2.11,<2.14",
+  "transformers>=5.5,<=5.16.1",
+  "accelerate>=1.0,<2",
+  "pyarrow>=18,<24",
+  "numpy>=2,<3",
+  "pydantic>=2.10,<3",
+  "pyyaml>=6,<7",
+  "filelock>=3.16,<4",
+  "matplotlib>=3.9,<4",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[project.scripts]
+loopsd-search = "loopsd_search.cli:main"
+
+[project.optional-dependencies]
+nemo-api = [
+    "fastapi>=0.162.0",
+    "multi-storage-client[boto3]>=0.50",
+    "nemo-lens",
+    "nvidia-ml-py>=13.615.71",
+    "nvtx>=0.2.16",
+    "omegaconf>=2.3,<3",
+    "pyzmq>=27.2.0",
+    "ray[default]>=2.58,<3",
+    "requests>=2.32",
+    "tensordict>=0.15.3",
+    "uvicorn>=0.54.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/loopsd_search"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["nemo: requires the actual NeMo RL runtime dependencies"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.uv.sources]
+nemo-lens = { git = "https://github.com/NVIDIA-NeMo/Lens.git", rev = "4d045c03186b90afdc815db46b671f6a21bc7e98" }

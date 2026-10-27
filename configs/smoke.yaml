@@ -1,0 +1,26 @@
+# Integration smoke only: these tiny budgets cannot measure reasoning quality.
+model:
+  path: ../../../models/Qwen3-1.7B
+  device: auto
+  dtype: bfloat16
+  attention: sdpa
+  batch_size: 1
+data:
+  train: ../../../data/gsm8k/train-00000-of-00001.parquet
+  test: ../../../data/gsm8k/test-00000-of-00001.parquet
+  search_size: 2
+  validation_size: 1
+  stage1_size: 1
+decode:
+  thinking_budget: 8
+  answer_budget: 8
+search:
+  top_k_stage1: 1
+  top_k_stage2: 1
+  candidate_routes: ['8:12']
+evaluation:
+  test_limit: 2
+  bootstrap_samples: 1000
+nemo_rl_path: ../../nemo-rl
+output_dir: ../outputs/smoke
+backend: hf

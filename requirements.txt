@@ -1,0 +1,5 @@
+# Dedicated Linux B200 environment. See OFFLINE_B200.md for wheel preparation.
+# No remote URLs: safe to use with pip --no-index --find-links.
+torch==2.13.0+cu132
+-r requirements/runtime.txt
+-r requirements/nemo-api.txt
